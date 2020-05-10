@@ -1,6 +1,6 @@
 /*4 3 4 - 5 2  6 1 - 2 0
 3 5 20 - 7 4  3 1
-�������:
+输出样例:
 15 24 - 25 22 30 21 - 10 20 - 21 8 35 6 - 33 5 14 4 - 15 3 18 2 - 6 1
 5 20 - 4 4 - 5 2 9 1 - 2 08*/
 #include<iostream>
@@ -25,7 +25,7 @@ vector<Ptr> Add(vector<Ptr>P1, vector<Ptr>P2)
 	vector<Ptr>AP;
 	while (i < P1.size() && j < P2.size())
 	{
-		if (P1[i]->expon > P2[j]->expon)//P1��ָ����P2
+		if (P1[i]->expon > P2[j]->expon)//P1所指大于P2
 		{
 			Ptr P = (Ptr)malloc(sizeof(struct PolyNode));
 			P->coef = P1[i]->coef;
@@ -50,7 +50,7 @@ vector<Ptr> Add(vector<Ptr>P1, vector<Ptr>P2)
 				P->coef = sum;
 				P->expon = P2[j]->expon;
 				AP.push_back(P);
-			}//�����������Թ�attach
+			}//如果等于零就略过attach
 			i++; j++;
 		}
 	}
@@ -112,12 +112,12 @@ vector<Ptr> Multiply(vector<Ptr>P1, vector<Ptr>P2)
 
 int main()
 {
-	vector<Ptr>P1;//����ϰ�ߣ���ϲ������ָ������,����Ptr
+	vector<Ptr>P1;//个人习惯，更喜欢操作指针类型,故用Ptr
 	vector<Ptr>P2;
 	int N1, N2;
 	scanf("%d", &N1);
 	int expon, coef;
-	if (!N1)//�߽�
+	if (!N1)//边界
 	{
 		Ptr P = (Ptr)malloc(sizeof(struct PolyNode));
 		P->coef = 0;
@@ -127,7 +127,7 @@ int main()
 	while (N1--)
 	{
 		scanf("%d%d", &coef, &expon);
-		Ptr P = (Ptr)malloc(sizeof(struct PolyNode));//�ǵ�ÿ�ζ�Ҫ����һ��ռ�
+		Ptr P = (Ptr)malloc(sizeof(struct PolyNode));//记得每次都要申请一块空间
 		P->coef = coef;
 		P->expon = expon;
 		P1.push_back(P);
@@ -153,3 +153,7 @@ int main()
 	Print(Add(P1, P2));
 	return 0;
 }
+/*与链表结构相比，节点不需要申请指针空间，可以直接按下标访问节点。
+但是本题中不能体现动态数组的优势，因为无论是加法还是乘法，都是从头到尾
+一个节点一个节点的访问。乘法除了不停调用加法之外也可以用插入法，但是插入法反而
+不太适用于数组结构，因为还要把比它小的节点全部后移*/
